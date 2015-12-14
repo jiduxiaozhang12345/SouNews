@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="JS/jquery-1.8.2.min.js"></script>
+</head>
+<body>
+    <!-- figure -->
+    <figure>
+        <img src="images/1.jpg" height="100" width="100" />
+        <img src="images/2.jpg" height="100" width="100" />
+        <img src="images/3.jpg" height="100" width="100" />
+        <img src="images/4.jpg" height="100" width="100" />
+        <!-- figcaption表示对图片的描述，一个figure只有一个figcaption节点 -->
+        <figcaption>风景</figcaption>
+    </figure>
+    <br />
+
+    <!-- details元素和summary元素 -->
+    <details id="detail" onclick="details(this)">
+        <summary>速度与激情7</summary>
+        <p id="p" style="visibility:hidden">这是为保罗特意打造的电影</p>
+    </details>
+    <script>
+        function details(detail) {
+            var p = document.getElementById("p");
+            if (detail.open) {
+                p.style.visibility = "hidden";
+            }
+            else {
+                p.style.visibility = "visible";
+            }
+        }
+    </script>
+    <br />
+
+    <!-- mark高亮显示 -->
+    <p>这段文字是用来<mark>测试</mark>的</p>
+    <br />
+
+    <!-- progress -->
+    <section>
+        <h2>progress元素的使用</h2>
+    </section>
+    <p>完成的百分比<progress id="p" max="100"><span>0</span>%</progress></p>
+    <input type="button" value="点击" onclick="btn()" />
+    <script>
+        function btn() {
+            for (var i = 0 ; i <= 100; i++) { updateprogress(i);}
+        }
+        function updateprogress(newvalue) {
+            var progressBar = $('#p')[0];
+            progressBar.value = newvalue;
+            progressBar.getElementsByTagName('span')[0].textContent = newvalue;
+        }
+    </script>
+    <br />
+
+    <!-- meter元素 -->
+    <meter value="60" min="0" max="100" low="10" high="90" optimum="80"></meter>
+    <meter value="20" min="0" max="100"></meter>
+    <br />
+
+    <!-- ol -->
+    <ol start="5" reversed>
+        <li>列表1</li>
+        <li>列表2</li>
+        <li>列表3</li>
+        <li>列表4</li>
+        <li>列表5</li>
+    </ol>
+    <br />
+
+    <!-- dl -->
+    <dl>
+        <dt>Hello</dt>
+        <dd>你好我就是Hello</dd>
+        <dt>博客</dt>
+        <dd>你喜欢看博客么</dd>
+    </dl>
+    <br />
+
+    <!-- cite -->
+    <h3>cite元素</h3>
+    <p>我最习惯的电影是<cite>速度与激情</cite></p>
+</body>
+</html>

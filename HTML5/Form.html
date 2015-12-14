@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+</head>
+<body>
+    <form>
+        <input type="submit" name="n1" value="v1" formaction="/Post/test1" formmethod="get" formenctype="multipart/form-data"/>提交到第一个Action
+        <br />
+        <input type="submit" name="n2" value="v2" formaction="/Post/test2" formmethod="post" />提交到第二个Action
+        <br />
+        <input type="submit" name="n3" value="v3" formaction="/Post/test3" formmethod="put" />提交到第三个Action
+        <br />
+        <input type="submit" name="n4" value="v4" formaction="/Post/test4" formmethod="delete" />提交到第四个Action
+        <br />
+        <input type="text" name="n5" placeholder="请输入编号" />
+        <br />
+        <input type="text" name="name" autocomplete="on"/>
+        <br />
+        请输入内容：<input type="text"  pattern="[A-Z]{3}"/>
+        <br />
+        <input type="checkbox" indeterminate id="cb"/>属性测试
+        <script>
+            var cb = document.getElementById("cb");
+            cb.indeterminate = true;
+        </script>
+    </form>
+</body>
+</html>

@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="JS/jquery-1.8.2.min.js"></script>
+</head>
+<body>
+    <p>You have viewed this page <span id="count">0</span>  time(s).</p>
+    <p><input type="button" value="changeStorage" onclick="changeS()" /></p>
+    <div id="div"></div>
+    <script>
+        var storage = window.localStorage;
+        if (!storage.getItem("pageLoadCount")) storage.setItem("pageLoadCount", 0);
+        storage.pageLoadCount = parseInt(storage.getItem("pageLoadCount")) + 1;//必须格式转换
+        document.getElementById("count").innerHTML = storage.pageLoadCount;
+        showStorage();
+        if (window.addEventListener) {
+            window.addEventListener("storage", handle_storage, false);
+        } else if (window.attachEvent) {
+            window.attachEvent("onstorage", handle_storage);
+        }
+        function handle_storage(e) {
+            if (!e) { e = window.event; }
+            showObject(e);
+        }
+        function showObject(obj) {
+            //递归显示object
+            if (!obj) { return; }
+            for (var i in obj) {
+                if (typeof (obj[i]) != "object" || obj[i] == null) {
+                    document.write(i + " : " + obj[i] + "<br/>");
+                } else {
+                    document.write(i + " : object" + "<br/>");
+                }
+            }
+        }
+        storage.setItem("a", 5);
+        function changeS() {
+            //修改一个键值，测试storage事件
+            if (!storage.getItem("b")) { storage.setItem("b", 0); }
+            storage.setItem('b', parseInt(storage.getItem('b')) + 1);
+            $('#div').children().remove();
+            showStorage();
+        }
+        function showStorage() {
+            //循环显示localStorage里的键值对
+            for (var i = 0; i < storage.length; i++) {
+                //key(i)获得相应的键，再用getItem()方法获得对应的值
+                $('#div').append("<span>" + storage.key(i) + " : " + storage.getItem(storage.key(i)) + "</span><br>").appendTo;
+            }
+        }
+    </script>
+</body>
+</html>

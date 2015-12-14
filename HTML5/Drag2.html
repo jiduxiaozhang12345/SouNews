@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <style>
+        #imgContainer {
+            background-color:#cccccc;
+            width:500px;
+            height:500px;
+        }
+    </style>
+</head>
+<body>
+    <div id="imgContainer"></div>
+    <div id="msg"></div>
+</body>
+</html>
+<script>
+    var imgContainer = document.getElementById('imgContainer');
+    var msg = document.getElementById('msg');
+    window.onload = function () {
+
+        imgContainer.ondragover = function (e) {
+            e.preventDefault();
+        }
+
+        imgContainer.ondrop = function (e) {
+            e.preventDefault();
+            var f = e.dataTransfer.files[0];
+            var fileReader = new FileReader();
+            fileReader.onload = function (e) {
+                showObj(e.target);
+                imgContainer.innerHTML = "<img src='" + fileReader.result + "'/>";
+            }
+            fileReader.readAsDataURL(f);
+        }
+    }
+
+    function showObj(obj) {
+        var s = "";
+        for (var k in obj) {
+            s += k + ":" + obj[k] + "<br/>";
+        }
+        msg.innerHTML = s;
+    }
+</script>

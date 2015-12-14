@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <script src="JS/jquery-1.8.2.min.js"></script>
+</head>
+<body>
+    Selection对象与Range对象的使用
+    <input type="button" value="点我" onclick="rangeTest()"/>
+    <div id="showRange"></div>
+    <hr />
+    <script>
+        function rangeTest() {
+            var html;
+            var showRangeDiv = $('#showRange');
+            var selection = document.getSelection();
+            if (selection.rangeCount>0) {
+                html = "您选取了 " + selection.rangeCount + " 段内容<br/>"
+                for (var i = 0; i < selection.rangeCount; i++) {
+                    var range = selection.getRangeAt(i);
+                    html += "第" + (i + 1) + "段内容为：" + range + "<br/>";
+                }
+                showRangeDiv.text(html);
+            }
+        }
+    </script>
+
+    <!-- SelectNode方法 -->
+    <div id="div" style="background-color:#ccc;width:300px;height:50px;">
+        元素中的内容
+    </div>
+    <button onclick="deleteRangeContent(true)">删除内容</button>
+    <button onclick="deleteRangeContent(false)">删除元素</button>
+    <hr />
+    <script>
+        function deleteRangeContent(onlyContent) {
+            var div = $('#div')[0];
+            var rangeObj = document.createRange();
+            if (onlyContent) {
+                rangeObj.selectNodeContents(div);
+                rangeObj.deleteContents();
+            }
+            else {
+                rangeObj.selectNode(div);
+                rangeObj.deleteContents();
+            }
+        }
+    </script>
+
+    <!-- setStart/setEnd方法 google浏览器可以-->
+    <div id="myDiv" style="color:red;">
+        这段文字是用来删除的，请注意！
+    </div>
+    <button onclick="deleteChar()">删除文字</button>
+    <hr />
+    <script>
+        function deleteChar() {
+            var div = document.getElementById('myDiv');
+            var textNode = div.firstChild;
+            var rangeObj = document.createRange();
+            rangeObj.setStart(textNode, 1);
+            rangeObj.setEnd(textNode, 4);
+            rangeObj.deleteContents();
+        }
+    </script>
+
+    <!-- s etStartBefore -->
+
+
+    <!-- CloneRange/CloneContents -->
+    <p id="p">这里是随便写的内容，方便克隆</p>
+    <button onclick="CloneRange()">克隆</button>
+    <script>
+        function CloneRange() {
+            var rangeObj = document.createRange();
+            rangeObj.selectNodeContents(document.getElementById('p'));
+            var clone = rangeObj.cloneRange();
+            alert(clone.toString());
+        }
+    </script>
+    <hr />
+
+    <!-- extractContents -->
+    <div id="srcDiv" style="background-color:aquamarine;width:200px;height:50px;">我的小沈阳呀</div>
+    <div id="disDiv" style="background-color:bisque;width:200px;height:50px;"></div>
+    <button onclick="moveContent()">移动元素</button>
+    <script>
+        function moveContent() {
+            var srcDiv = document.getElementById('srcDiv');
+            var disDiv = document.getElementById('disDiv');
+            var rangeObj = document.createRange();
+            //获取内容
+            rangeObj.selectNodeContents(srcDiv);
+            //提取第一个div中的内容放到第二个div中，相当于剪切
+            var docFragment = rangeObj.extractContents();
+            disDiv.appendChild(docFragment);
+        }
+    </script>
+    <hr />
+
+    <!-- insertNode -->
+    <div onmouseup="moveButton()" style="width:400px;background-color:bisque">
+        这里是一段测试内容，欢迎大家赏脸
+        这里是一段测试内容，欢迎大家赏脸
+        这里是一段测试内容，欢迎大家赏脸
+    </div>
+    <button id="button">按钮</button>
+    <script>
+        function moveButton() {
+            var btn = document.getElementById('button');
+            var selection = document.getSelection();
+            if (selection.rangeCount>0) {
+                var range = selection.getRangeAt(0);
+                range.insertNode(btn);
+            }
+        }
+    </script>
+    <hr />
+
+    <!-- compareBondaryPoints -->
+    <div>这是一段文字，我也不<b id="boldtext">知道</b>该说些什么，祝你安好吧</div>
+    <button onclick="testPlace()">位置比较</button>
+    <script>
+        function testPlace() {
+            var boldtext = document.getElementById('boldtext');
+            var boldrange = document.createRange();
+            boldrange.selectNodeContents(boldtext.firstChild);
+            var selection = document.getSelection();
+            if (selection.rangeCount>0) {
+                var selRange = selection.getRangeAt(0);
+                if (selRange.compareBoundaryPoints(Range.START_TO_END,boldrange)<0) {
+                    alert('选中的文字在粗体前面');
+                } else if (selRange.compareBoundaryPoints(Range.START_TO_END, boldrange) > 0) {
+                    alert('选中的文字在粗体后面');
+                }
+            }
+        }
+    </script>
+    <hr />
+
+    <!-- collapse    /detach释放range对象 -->
+    <div id="div" style="background-color:bisque;width:300px;height:50px;">DIV中的内容</div>
+    <button onclick="select()">选择元素</button>
+    <button onclick="cancel()">取消元素</button>
+    <button onclick="show()">显示元素</button>
+    <script>
+        var rangeObj = document.createRange();
+        function select() {
+            var div = document.getElementById('div');
+            rangeObj.selectNode(div);
+        }
+        function cancel() {
+            rangeObj.collapse(false);
+        }
+        function show() {
+            alert(rangeObj.toString());
+        }
+    </script>
+    <hr />
+
+
+</body>
+</html>
